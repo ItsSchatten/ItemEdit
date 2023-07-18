@@ -45,7 +45,7 @@ public class AxolotlVariant extends SubCmd {
             }
             meta.setVariant(type);
             item.setItemMeta(meta);
-            p.updateInventory();
+            
         } catch (Exception e) {
             onFail(p, alias);
         }

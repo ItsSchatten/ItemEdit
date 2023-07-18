@@ -29,7 +29,7 @@ public class Type extends SubCmd {
             if (mat == Material.AIR)
                 throw new IllegalArgumentException();
             item.setType(mat);
-            p.updateInventory();
+            
         } catch (Exception e) {
             onFail(p, alias);
         }

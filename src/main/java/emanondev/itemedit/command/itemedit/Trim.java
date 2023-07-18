@@ -56,7 +56,7 @@ public class Trim extends SubCmd {
             ArmorMeta armorMeta = (ArmorMeta) meta;
             armorMeta.setTrim(new ArmorTrim(mat,patt));
             item.setItemMeta(armorMeta);
-            p.updateInventory();
+            
         } catch (Exception e) {
             onFail(p, alias);
         }

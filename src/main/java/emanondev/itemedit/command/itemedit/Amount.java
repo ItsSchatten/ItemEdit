@@ -31,7 +31,7 @@ public class Amount extends SubCmd {
                 throw new IllegalArgumentException("Wrong amount number");
             else
                 item.setAmount(amount);
-            p.updateInventory();
+            
         } catch (Exception e) {
             onFail(p, alias);
         }

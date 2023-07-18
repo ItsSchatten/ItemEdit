@@ -33,7 +33,7 @@ public class BookAuthor extends SubCmd {
         if (args.length == 1) {
             itemMeta.setAuthor(null);
             item.setItemMeta(itemMeta);
-            p.updateInventory();
+            
             return;
         }
 
@@ -43,7 +43,7 @@ public class BookAuthor extends SubCmd {
                 name.append(" ").append(args[i]);
             itemMeta.setAuthor(ChatColor.translateAlternateColorCodes('&', name.toString()));
             item.setItemMeta(itemMeta);
-            p.updateInventory();
+            
         } catch (Exception e) {
             onFail(p, alias);
         }

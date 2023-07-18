@@ -1,6 +1,10 @@
 package emanondev.itemedit;
 
 import emanondev.itemedit.aliases.AliasSet;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.bukkit.Bukkit;
@@ -16,7 +20,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.HttpRetryException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -186,28 +189,34 @@ public class Util {
     }
 
     public static String formatText(CommandSender sender, String text, String basePermission) {
-        text = ChatColor.translateAlternateColorCodes('&', text);
+        // Replace any old color formatting to MiniMessage formatting.
+        text = ColorCodeConverter.replace(text);
+
         if (basePermission != null) {
-            for (ChatColor style : ChatColor.values())
-                if (style.isFormat()) {
-                    if (!sender.hasPermission(basePermission + ".format." + style.name().toLowerCase(Locale.ENGLISH)))
-                        text = text.replaceAll(style.toString(), "");
-                } else if (!sender.hasPermission(basePermission + ".color." + style.name().toLowerCase(Locale.ENGLISH)))
-                    text = text.replaceAll(style.toString(), "");
-            if (sender.hasPermission(basePermission + ".color.hexa")) {
+            for (NamedTextColor color : NamedTextColor.NAMES.values()) {
+                if (!sender.hasPermission(basePermission + ".color." + color.toString())) {
+                    text = text.replaceAll("<" + color + ">", "");
+                }
+            }
+
+            for (TextDecoration textDecoration : TextDecoration.values()) {
+                if (!sender.hasPermission(basePermission + ".format." + textDecoration.name().toLowerCase(Locale.ENGLISH)))
+                    text = text.replaceAll(ColorCodeConverter.getReplacementFromFormat(textDecoration), "");
+            }
+
+            if (!sender.hasPermission(basePermission + ".color.hexa")) {
                 try {
                     int from = 0;
-                    while (text.indexOf("&#", from) >= 0) {
-                        from = text.indexOf("&#", from) + 1;
-                        text = text.replace(text.substring(from - 1, from + 7),
-                                net.md_5.bungee.api.ChatColor.of(text.substring(from, from + 7)).toString());
+                    while (text.indexOf("<#", from) >= 0 && text.indexOf(">", from) >= 0) {
+                        from = text.indexOf("<#", from) + 1;
+                        text = text.replace(text.substring(from - 1, from + 8), "");
                     }
                 } catch (Throwable t) {
                 }
             }
         }
-        return text;
 
+        return text;
     }
 
     public static boolean isAllowedRenameItem(CommandSender sender, Material type) {
@@ -376,16 +385,16 @@ public class Util {
         return true;
     }
 
-    public static boolean hasPaperAPI(){
+    public static boolean hasPaperAPI() {
         try {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
             return true;
-        } catch(NoClassDefFoundError | ClassNotFoundException ex) {
+        } catch (NoClassDefFoundError | ClassNotFoundException ex) {
             return false;
         }
     }
 
-    public static boolean hasMiniMessageAPI(){
+    public static boolean hasMiniMessageAPI() {
         return false;//TODO
     }
 }

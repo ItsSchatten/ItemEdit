@@ -37,7 +37,7 @@ public class FireworkPower extends SubCmd {
                 throw new IllegalArgumentException();
             itemMeta.setPower(power);
             item.setItemMeta(itemMeta);
-            p.updateInventory();
+            
         } catch (Exception e) {
             onFail(p, alias);
         }

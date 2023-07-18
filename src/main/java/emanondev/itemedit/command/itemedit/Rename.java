@@ -3,6 +3,8 @@ package emanondev.itemedit.command.itemedit;
 import emanondev.itemedit.Util;
 import emanondev.itemedit.command.ItemEditCommand;
 import emanondev.itemedit.command.SubCmd;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +19,10 @@ public class Rename extends SubCmd {
         super("rename", cmd, true, true);
     }
 
+    public Rename(String name, ItemEditCommand cmd) {
+        super(name, cmd, true, true);
+    }
+
     @Override
     public void onCommand(CommandSender sender, String alias, String[] args) {
         Player p = (Player) sender;
@@ -26,16 +32,14 @@ public class Rename extends SubCmd {
 
         ItemMeta itemMeta = item.getItemMeta();
         if (args.length == 1) {
-            itemMeta.setDisplayName(" ");
+            itemMeta.displayName(Component.text(""));
             item.setItemMeta(itemMeta);
-            p.updateInventory();
             return;
         }
 
         if (args.length == 2 && args[1].equalsIgnoreCase("clear")) {
-            itemMeta.setDisplayName(null);
+            itemMeta.displayName(null);
             item.setItemMeta(itemMeta);
-            p.updateInventory();
             return;
         }
 
@@ -47,9 +51,8 @@ public class Rename extends SubCmd {
         if (Util.hasBannedWords(p, name))
             return;
 
-        itemMeta.setDisplayName(name);
+        itemMeta.displayName(MiniMessage.miniMessage().deserialize(name ));
         item.setItemMeta(itemMeta);
-        p.updateInventory();
     }
 
     @Override
@@ -62,7 +65,7 @@ public class Rename extends SubCmd {
         if (item != null && item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
             if (meta.hasDisplayName())
-                return Util.complete(args[1], meta.getDisplayName().replace('§', '&'), "clear");
+                return Util.complete(args[1], MiniMessage.miniMessage().serializeOr(meta.displayName(), ""), "clear");
         }
         return Collections.emptyList();
     }

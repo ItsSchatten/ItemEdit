@@ -16,6 +16,7 @@ public class ItemEditCommand extends AbstractCommand {
         instance = this;
         try {
             this.registerSubCommand(new Rename(this));
+            this.registerSubCommand(new Name(this));
             this.registerSubCommand(new Lore(this));
             this.registerSubCommand(new Enchant(this));
             this.registerSubCommand(new Hide(this));

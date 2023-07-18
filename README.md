@@ -5,18 +5,19 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/emanondev/ItemEdit.svg)](http://isitmaintained.com/project/emanondev/ItemEdit "Percentage of issues still open")
 ![GitHub](https://img.shields.io/github/license/emanondev/ItemEdit)
 
+**This is a fork of ItemEdit see [this repository](https://github.com/emanondev/ItemEdit) for the base version of this.**
+
 ItemEdit is a plugin for spigot.<br>
 The goal of ItemEdit is to allow the user (admins and creative users mostly) to edit minecraft items adding and changing
-vanilla properties.<br>The plugin also allow to save items to use them later as rewards or for economy purpose.
+vanilla properties.<br>The plugin also allows saving items to use them later for use as rewards or for economy purposes.
 
-Itemedit is **fast**, **easy to use**, **user friendly** and **free**
+ItemEdit is **fast**, **easy to use**, **user-friendly** and **free**!
 
 ## Downloads
 
-You can obtain the jar of the plugin
-on [spigot resource page](https://www.spigotmc.org/resources/40993/history "spigot resource page")
+There is no download hosted for this fork.
 
 ## Support
 
-ItemEdit supports Spigot 1.8+ and any spigot fork.<br>
-You can join [Discord](https://discord.gg/YWtwqNME "Discord") for any question.
+This version of ItemEdit is built to mainly support the latest versions of [Paper](https://github.com/PaperMC/Paper) and
+backwards compatibility nor compatability with base Spigot is not a priority of this fork.

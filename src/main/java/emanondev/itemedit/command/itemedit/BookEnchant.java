@@ -53,7 +53,7 @@ public class BookEnchant extends SubCmd {
                 meta.addStoredEnchant(ench,lv,true);
             }
             item.setItemMeta(meta);
-            p.updateInventory();
+            
         } catch (Exception e) {
             onFail(p, alias);
         }
